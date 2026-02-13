@@ -5,18 +5,11 @@ set -eoux pipefail
 ###############################################################################
 # Example: Swap GNOME Desktop with COSMIC Desktop
 ###############################################################################
-# This example demonstrates replacing the GNOME desktop environment with
-# System76's COSMIC desktop from their COPR repository.
+# Replace the GNOME desktop environment with System76's COSMIC desktop from
+# their COPR repository.
 #
 # COSMIC is a new desktop environment built in Rust by System76.
 # https://github.com/pop-os/cosmic-epoch
-#
-# To use this script:
-# 1. Rename to remove .example extension: mv 30-cosmic-desktop.sh.example 30-cosmic-desktop.sh
-# 2. Build - scripts run in numerical order automatically
-#
-# WARNING: This removes GNOME and replaces it with COSMIC. Only use this if
-# you want COSMIC as your desktop environment instead of GNOME.
 ###############################################################################
 
 # Source helper functions

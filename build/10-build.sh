@@ -44,10 +44,15 @@ echo "::endgroup::"
 echo "::group:: Install Packages"
 
 # Install packages using dnf5
-# Example: dnf5 install -y tmux
+dnf5 install -y libffi-devel libicu74 libjpeg-turbo-devel libyaml-devel openssl-devel \
+  chafa flac fscrypt fuse-sshfs fuse-zip sshfs tmux vifm \
+  gwenview okular qutebrowser
 
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
+# Ghostty - https://ghostty.org/
+copr_install_isolated "scottames/ghostty" ghostty
+
+# Zellij - https://zellij.dev/
+copr_install_isolated "varlad/zellij" zellij
 
 echo "::endgroup::"
 
