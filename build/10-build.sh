@@ -52,7 +52,7 @@ dnf5 install -y libffi-devel libicu74 libjpeg-turbo-devel libyaml-devel openssl-
 copr_install_isolated "scottames/ghostty" ghostty
 
 # Zellij - https://zellij.dev/
-copy_install_isolated "varlad/zellij" zellij
+copr_install_isolated "varlad/zellij" zellij
 
 echo "::endgroup::"
 

@@ -1,6 +1,6 @@
 # cosmicforge
 
-As a "Smith", I decided to "forge" my own OS. It's based on Universal Blue's wonderful Bluefin, but with the Gnome desktop replaced with the flexibility of System76's youthful Cosmic Desktop.
+As a "Smith", I decided to "forge" my own OS. It's based on Universal Blue's wonderful Bluefin, but with the Gnome desktop replaced with System76's flexible and youthful Cosmic Desktop.
 
 This image uses the **multi-stage build architecture**, combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
 
