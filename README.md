@@ -66,27 +66,27 @@ This image uses the **multi-stage build architecture**, combining resources from
 2. ~~`Justfile` (line 1): `export image_name := env("IMAGE_NAME", "your-repo-name")`~~
 3. ~~`README.md` (line 1): `# your-repo-name`~~
 4. ~~`artifacthub-repo.yml` (line 5): `repositoryID: your-repo-name`~~
-5. ~~`custom/ujust/README.md` (~line 175): `localhost/your-repo-name:stable`~~
+5. ~~`custom/ujust/README.md` (\~line 175): `localhost/your-repo-name:stable`~~
 6. ~~`.github/workflows/clean.yml` (line 23): `packages: your-repo-name`~~
 
-### 3. Enable GitHub Actions
+### ~~3. Enable GitHub Actions~~
 
-- Go to the "Actions" tab in your repository
-- Click "I understand my workflows, go ahead and enable them"
+- ~~Go to the "Actions" tab in your repository~~
+- ~~Click "I understand my workflows, go ahead and enable them"~~
 
-Your first build will start automatically!
+~~Your first build will start automatically!~~
 
-Note: Image signing is disabled by default. Your images will build successfully without any signing keys. Once you're ready for production, see "Optional: Enable Image Signing" below.
+~~Note: Image signing is disabled by default. Your images will build successfully without any signing keys. Once you're ready for production, see "Optional: Enable Image Signing" below.~~
 
 ### 4. Customize Your Image
 
-Choose your base image in `Containerfile` (line 23):
+~~Choose your base image in `Containerfile` (line 23):~~
 
 ```dockerfile
 FROM ghcr.io/ublue-os/bluefin:stable
 ```
 
-Add your packages in `build/10-build.sh`:
+~~Add your packages in `build/10-build.sh`:~~
 
 ```bash
 dnf5 install -y package-name
@@ -98,24 +98,24 @@ Customize your apps:
 - Add Flatpaks in `custom/flatpaks/` ([guide](custom/flatpaks/README.md))
 - Add ujust commands in `custom/ujust/` ([guide](custom/ujust/README.md))
 
-### 5. Development Workflow
+### ~~5. Development Workflow~~
 
-All changes should be made via pull requests:
+~~All changes should be made via pull requests:~~
 
-1. Open a pull request on GitHub with the change you want.
-2. The PR will automatically trigger:
-   - Build validation
-   - Brewfile, Flatpak, Justfile, and shellcheck validation
-   - Test image build
-3. Once checks pass, merge the PR
-4. Merging triggers publishes a `:stable` image
+1. ~~Open a pull request on GitHub with the change you want.~~
+2. ~~The PR will automatically trigger:~~
+   - ~~Build validation~~
+   - ~~Brewfile, Flatpak, Justfile, and shellcheck validation~~
+   - ~~Test image build~~
+3. ~~Once checks pass, merge the PR~~
+4. ~~Merging triggers publishes a `:stable` image~~
 
 ### 6. Deploy Your Image
 
 Switch to your image:
 
 ```bash
-sudo bootc switch ghcr.io/your-username/your-repo-name:stable
+sudo bootc switch ghcr.io/arti5an/cosmicforge:stable
 sudo systemctl reboot
 ```
 
