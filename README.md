@@ -1,30 +1,15 @@
-# finpilot
+# cosmicforge
 
-A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux. 
+As a "Smith", I decided to "forge" my own OS. It's based on Universal Blue's wonderful Bluefin, but with the Gnome desktop replaced with the flexibility of System76's youthful Cosmic Desktop.
 
-This template uses the **multi-stage build architecture** from , combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
-
-**Unlike previous templates, you are not modifying Bluefin and making changes.**: You are assembling your own Bluefin in the same exact way that Bluefin, Aurora, and Bluefin LTS are built. This is way more flexible and better for everyone since the image-agnostic and desktop things we love about Bluefin lives in @projectbluefin/common. 
-
- Instead, you create your own OS repository based on this template, allowing full customization while leveraging Bluefin's robust build system and shared components.
+This image uses the **multi-stage build architecture**, combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
 
 > Be the one who moves, not the one who is moved.
-
-## Guided Copilot Mode
-
-Here are the steps to guide copilot to make your own repo, or just use it like a regular image template.
-
-1. Click the green "Use this as a template" button and create a new repository
-2. Select your owner, pick a repo name for your OS, and a description
-3. In the "Jumpstart your project with Copilot (optional)" add this, modify to your liking:
-
-```
-Use @projectbluefin/finpilot as a template, name the OS the repository name. Ensure the entire operating system is bootstrapped. Ensure all github actions are enabled and running.  Ensure the README has the github setup instructions for cosign and the other steps required to finish the task.
-```
 
 ## What's Included
 
 ### Build System
+
 - Automated builds via GitHub Actions on every commit
 - Awesome self hosted Renovate setup that keeps all your images and actions up to date.
 - Automatic cleanup of old images (90+ days) to keep it tidy
@@ -38,66 +23,77 @@ Use @projectbluefin/finpilot as a template, name the OS the repository name. Ens
   - See checklist below to enable these as they take some manual configuration
 
 ### Homebrew Integration
+
 - Pre-configured Brewfiles for easy package installation and customization
 - Includes curated collections: development tools, fonts, CLI utilities. Go nuts.
 - Users install packages at runtime with `brew bundle`, aliased to premade `ujust commands`
 - See [custom/brew/README.md](custom/brew/README.md) for details
 
 ### Flatpak Support
+
 - Ship your favorite flatpaks
 - Automatically installed on first boot after user setup
 - See [custom/flatpaks/README.md](custom/flatpaks/README.md) for details
 
 ### ujust Commands
+
 - User-friendly command shortcuts via `ujust`
 - Pre-configured examples for app installation and system maintenance for you to customize
 - See [custom/ujust/README.md](custom/ujust/README.md) for details
 
 ### Build Scripts
+
 - Modular numbered scripts (10-, 20-, 30-) run in order
 - Example scripts included for third-party repositories and desktop replacement
 - Helper functions for safe COPR usage
 - See [build/README.md](build/README.md) for details
 
+---
+
+> Everything after this point is to be removed once I complete the first stage of my custom OS journey
+
 ## Quick Start
 
-### 1. Create Your Repository
+### ~~1. Create Your Repository~~
 
-Click "Use this template" to create a new repository from this template.
+~~Click "Use this template" to create a new repository from this template.~~
 
-### 2. Rename the Project
+### ~~2. Rename the Project~~
 
-Important: Change `finpilot` to your repository name in these 6 files:
+~~Important: Change `finpilot` to your repository name in these 6 files:~~
 
-1. `Containerfile` (line 4): `# Name: your-repo-name`
-2. `Justfile` (line 1): `export image_name := env("IMAGE_NAME", "your-repo-name")`
-3. `README.md` (line 1): `# your-repo-name`
-4. `artifacthub-repo.yml` (line 5): `repositoryID: your-repo-name`
-5. `custom/ujust/README.md` (~line 175): `localhost/your-repo-name:stable`
-6. `.github/workflows/clean.yml` (line 23): `packages: your-repo-name`
+1. ~~`Containerfile` (line 4): `# Name: your-repo-name`~~
+2. ~~`Justfile` (line 1): `export image_name := env("IMAGE_NAME", "your-repo-name")`~~
+3. ~~`README.md` (line 1): `# your-repo-name`~~
+4. ~~`artifacthub-repo.yml` (line 5): `repositoryID: your-repo-name`~~
+5. ~~`custom/ujust/README.md` (~line 175): `localhost/your-repo-name:stable`~~
+6. ~~`.github/workflows/clean.yml` (line 23): `packages: your-repo-name`~~
 
 ### 3. Enable GitHub Actions
 
 - Go to the "Actions" tab in your repository
 - Click "I understand my workflows, go ahead and enable them"
 
-Your first build will start automatically! 
+Your first build will start automatically!
 
 Note: Image signing is disabled by default. Your images will build successfully without any signing keys. Once you're ready for production, see "Optional: Enable Image Signing" below.
 
 ### 4. Customize Your Image
 
 Choose your base image in `Containerfile` (line 23):
+
 ```dockerfile
 FROM ghcr.io/ublue-os/bluefin:stable
 ```
 
 Add your packages in `build/10-build.sh`:
+
 ```bash
 dnf5 install -y package-name
 ```
 
 Customize your apps:
+
 - Add Brewfiles in `custom/brew/` ([guide](custom/brew/README.md))
 - Add Flatpaks in `custom/flatpaks/` ([guide](custom/flatpaks/README.md))
 - Add ujust commands in `custom/ujust/` ([guide](custom/ujust/README.md))
@@ -107,16 +103,17 @@ Customize your apps:
 All changes should be made via pull requests:
 
 1. Open a pull request on GitHub with the change you want.
-3. The PR will automatically trigger:
+2. The PR will automatically trigger:
    - Build validation
    - Brewfile, Flatpak, Justfile, and shellcheck validation
    - Test image build
-4. Once checks pass, merge the PR
-5. Merging triggers publishes a `:stable` image
+3. Once checks pass, merge the PR
+4. Merging triggers publishes a `:stable` image
 
 ### 6. Deploy Your Image
 
 Switch to your image:
+
 ```bash
 sudo bootc switch ghcr.io/your-username/your-repo-name:stable
 sudo systemctl reboot
@@ -136,15 +133,17 @@ Image signing is disabled by default to let you start building immediately. Howe
 ### Setup Instructions
 
 1. Generate signing keys:
+
 ```bash
 cosign generate-key-pair
 ```
 
 This creates two files:
+
 - `cosign.key` (private key) - Keep this secret
 - `cosign.pub` (public key) - Commit this to your repository
 
-2. Add the private key to GitHub Secrets:
+1. Add the private key to GitHub Secrets:
    - Copy the entire contents of `cosign.key`
    - Go to your repository on GitHub
    - Navigate to Settings → Secrets and variables → Actions ([GitHub docs](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository))
@@ -153,18 +152,18 @@ This creates two files:
    - Value: Paste the entire contents of `cosign.key`
    - Click "Add secret"
 
-3. Replace the contents of `cosign.pub` with your public key:
+2. Replace the contents of `cosign.pub` with your public key:
    - Open `cosign.pub` in your repository
    - Replace the placeholder with your actual public key
    - Commit and push the change
 
-4. Enable signing in the workflow:
+3. Enable signing in the workflow:
    - Edit `.github/workflows/build.yml`
    - Find the "OPTIONAL: Image Signing with Cosign" section.
    - Uncomment the steps to install Cosign and sign the image (remove the `#` from the beginning of each line in that section).
    - Commit and push the change
 
-5. Your next build will produce signed images!
+4. Your next build will produce signed images!
 
 Important: Never commit `cosign.key` to the repository. It's already in `.gitignore`.
 
@@ -244,6 +243,7 @@ Alternative approach using a temporary tag for clarity:
 ```
 
 **Parameters:**
+
 - `--max-layers`: Maximum number of layers for the rechunked image (typically 67 for optimal balance)
 - The first image reference is the source (input)
 - The second image reference is the destination (output)
@@ -251,17 +251,20 @@ Alternative approach using a temporary tag for clarity:
   - You can also use different tags (e.g., `-rechunked` suffix) and then retag if preferred
 
 **References:**
+
 - [CoreOS rpm-ostree build-chunked-oci documentation](https://coreos.github.io/rpm-ostree/build-chunked-oci/)
 - [bootc documentation](https://containers.github.io/bootc/)
 
 ### After Enabling Production Features
 
 Your workflow will:
+
 - Sign all images with your key
 - Generate and attach SBOMs
 - Provide full supply chain transparency
 
 Users can verify your images with:
+
 ```bash
 cosign verify --key cosign.pub ghcr.io/your-username/your-repo-name:stable
 ```
@@ -280,6 +283,7 @@ This template follows the **multi-stage build architecture** from @projectbluefi
 ### Multi-Stage Build Pattern
 
 **Stage 1: Context (ctx)** - Combines resources from multiple sources:
+
 - Local build scripts (`/build`)
 - Local custom files (`/custom`)
 - **@projectbluefin/common** - Desktop configuration shared with Aurora
@@ -288,6 +292,7 @@ This template follows the **multi-stage build architecture** from @projectbluefi
 - **@ublue-os/brew** - Homebrew integration
 
 **Stage 2: Base Image** - Default options:
+
 - `ghcr.io/ublue-os/silverblue-main:latest` (Fedora-based, default)
 - `quay.io/centos-bootc/centos-bootc:stream10` (CentOS-based alternative)
 
@@ -309,6 +314,7 @@ COPY --from=ghcr.io/ublue-os/brew:latest /system_files /oci/brew
 ```
 
 Your build scripts can access these files at:
+
 - `/ctx/oci/base/` - Base system configuration
 - `/ctx/oci/common/` - Shared desktop configuration
 - `/ctx/oci/branding/` - Branding assets
@@ -341,6 +347,7 @@ just run-vm-qcow2       # Test in browser-based VM
 ## Security
 
 This template provides security features for production use:
+
 - Optional SBOM generation (Software Bill of Materials) for supply chain transparency
 - Optional image signing with cosign for cryptographic verification
 - Automated security updates via Renovate
